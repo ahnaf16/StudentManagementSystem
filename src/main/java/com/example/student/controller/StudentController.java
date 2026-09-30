@@ -22,9 +22,13 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<Student> addStudent(@RequestBody Student student) {
-        Student savedStudent = studentService.addStudent(student);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedStudent);
+    public ResponseEntity<?> addStudent(@RequestBody Student student) {
+        try {
+            Student savedStudent = studentService.addStudent(student);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedStudent);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 
     @GetMapping

@@ -21,14 +21,19 @@ public class StudentService {
     }
 
     public Student addStudent(Student student) {
+        for (Student existingStudent : students) {
+            if (existingStudent.getId() != null && existingStudent.getId().equals(student.getId())) {
+                throw new IllegalArgumentException("Student with ID " + student.getId() + " already exists.");
+            }
+        }
+
         students.add(student);
-        
-        // Push to stack for last three added students
+
         recentStudents.push(student);
         if (recentStudents.size() > 3) {
-            recentStudents.remove(0); // Remove the oldest to keep only the last 3
+            recentStudents.remove(0);
         }
-        
+
         saveData();
         return student;
     }
@@ -77,14 +82,14 @@ public class StudentService {
         }
         return recentStudents.pop();
     }
-    
+
     public List<Student> getRecentStudents() {
         return new ArrayList<>(recentStudents);
     }
 
     private void saveData() {
         try (FileOutputStream fos = new FileOutputStream(FILE_NAME);
-             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(students);
         } catch (IOException e) {
             e.printStackTrace();
@@ -96,7 +101,7 @@ public class StudentService {
         File file = new File(FILE_NAME);
         if (file.exists()) {
             try (FileInputStream fis = new FileInputStream(file);
-                 ObjectInputStream ois = new ObjectInputStream(fis)) {
+                    ObjectInputStream ois = new ObjectInputStream(fis)) {
                 students = (List<Student>) ois.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
