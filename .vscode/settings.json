@@ -1,4 +1,20 @@
 {
     "java.compile.nullAnalysis.mode": "automatic",
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.jj": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/flutter/ephemeral": true,
+        "**/Flutter/ephemeral": true,
+        "**/.symlinks": true,
+        "**/.plugin_symlinks": true,
+        "**/e:\\Developments\\JAVA\\JavaAssignment\\StudentManagementSystem\\report.aux": true,
+        "**/e:\\Developments\\JAVA\\JavaAssignment\\StudentManagementSystem\\report.log": true,
+        "**/e:\\Developments\\JAVA\\JavaAssignment\\StudentManagementSystem\\report.gz": true,
+        "**/e:\\Developments\\JAVA\\JavaAssignment\\StudentManagementSystem\\report.out": true
+    }
 }

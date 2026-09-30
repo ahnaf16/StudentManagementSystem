@@ -1,0 +1,101 @@
+ \documentclass[12pt, a4paper]{article}                                                                                                                                 
+    \usepackage[utf8]{inputenc}                                                                                                                                            
+    \usepackage{geometry}                                                                                                                                                  
+    \geometry{a4paper, margin=1in}                                                                                                                                         
+    \usepackage{hyperref}
+    \usepackage{mathptmx} % Times New Roman font
+    \usepackage[none]{hyphenat}
+    \sloppy
+
+    \begin{document}                                                                                                                                                       
+                                                                                                                                                                           
+    % --------------------------------------------------------                                                                                                             
+    % TITLE PAGE                                                                                                                                                           
+    % --------------------------------------------------------                                                                                                             
+    \begin{titlepage}                                                                                                                                                      
+        \begin{center}                                                                                                                                                     
+            \vspace*{1cm}                                                                                                                                                  
+                                                                                                                                                                           
+            \Large{\textbf{SOUTHEAST UNIVERSITY}}\\                                                                                                                        
+            \large{\textbf{Department of Computer Science and Engineering (CSE)}}                                                                                          
+                                                                                                                                                                           
+            \vspace{1.5cm}                                                                                                                                                 
+                                                                                                                                                                           
+            \Large{\textbf{Assignment 1}}\\                                                                                                                                
+            \large{\textbf{Java Collections \& I/O with REST API}}                                                                                                         
+                                                                                                                                                                           
+            \vspace{1.5cm}                                                                                                                                                 
+                                                                                                                                                                           
+            \textbf{Course Title:} Advanced Java Lab \\                                                                                                                    
+            \textbf{Course Code:} CSE352 \\                                                                                                                                
+            \textbf{Section:} 4                                                                                                                                            
+                                                                                                                                                                           
+            \vspace{2cm}                                                                                                                                                   
+                                                                                                                                                                           
+            \begin{flushleft}                                                                                                                                              
+                \textbf{Submitted To:}\\                                                                                                                                   
+                Miftahul Sheikh \\                                                                                                                                         
+                Faculty, Department of CSE\\                                                                                                                               
+                Southeast University                                                                                                                                       
+            \end{flushleft}                                                                                                                                                
+                                                                                                                                                                           
+            \vspace{1.5cm}                                                                                                                                                 
+                                                                                                                                                                           
+            \begin{flushleft}                                                                                                                                              
+                \textbf{Submitted By:}\\                                                                                                                                   
+                Name: Ahnaf Sakil Mahmud\\                                                                                                                                 
+                ID: 2022100010066\\                                                                                                                                        
+                Program: BSc in CSE - Batch 14\\                                                                                                                           
+            \end{flushleft}                                                                                                                                                
+                                                                                                                                                                           
+            \vfill                                                                                                                                                         
+                                                                                                                                                                           
+            \textbf{Date of Submission:} \today                                                                                                                            
+                                                                                                                                                                           
+        \end{center}                                                                                                                                                       
+    \end{titlepage}                                                                                                                                                        
+                                                                                                                                                                           
+    % --------------------------------------------------------                                                                                                             
+    % REPORT BODY                                                                                                                                                          
+    % --------------------------------------------------------                                                                                                             
+                                                                                                                                                                           
+    \section*{Objective}                                                                                                                                                   
+    The primary objective of this assignment is to develop a Java-based RESTful Student Management System. The project practically demonstrates the implementation of the  
+  Java Collection Framework (ArrayList, HashSet, Stack), sorting mechanisms (Comparable and Comparator), Iterators, and Java I/O using Object Serialization.               
+                                                                                                                                                                           
+    \section*{Implementation Summary}                                                                                                                                      
+    The project was built using the Spring Boot framework to expose RESTful API endpoints, fulfilling all core requirements:                                               
+    \begin{itemize}                                                                                                                                                        
+        \item \textbf{ArrayList:} Utilized as the primary in-memory data structure to store \texttt{Student} objects.                                                      
+        \item \textbf{Comparable \& Comparator:} The \texttt{Student} class implements \texttt{Comparable} to sort students by ID ascending. A separate                    
+  \texttt{StudentCgpaComparator} was implemented to sort students by CGPA in descending order.                                                                             
+        \item \textbf{HashSet:} Utilized to extract and return a collection of unique student departments, automatically discarding duplicates.                            
+        \item \textbf{Stack:} Used to maintain a history of the last three added students, successfully demonstrating the use of \texttt{push()}, \texttt{pop()}, and      
+  \texttt{peek()} operations.                                                                                                                                              
+        \item \textbf{Iterator:} Used explicitly within the service layer to safely traverse and return the list of all students.                                          
+    \end{itemize}                                                                                                                                                          
+                                                                                                                                                                           
+    \section*{Java I/O: Byte Streams vs. Character Streams}                                                                                                                
+    The application uses Java I/O Object Serialization to save the student list to a file and restore it upon application     
+  startup. Below is a comparison between the two primary types of Java I/O streams:                                                                                        
+                                                                                                                                                                           
+    \subsection*{Byte Streams}                                                                                                                                             
+    Byte Streams process data exactly one byte (8 bits) at a time. They are strictly used for handling raw binary data, such as images, audio files, or serialized Java    
+  objects.                                                                                                                                                                 
+    \begin{itemize}                                                                                                                                                        
+        \item \textbf{Usage in this Project:} This project relies on Byte Streams. Specifically, \texttt{FileOutputStream} and \texttt{ObjectOutputStream} are used to     
+  serialize the \texttt{ArrayList} of students into a binary \texttt{.ser} file. Upon restarting the application, \texttt{FileInputStream} and \texttt{ObjectInputStream}  
+  deserialize the binary data back into living Java objects.                                                                                                               
+        \item \textbf{Examples:} \texttt{FileInputStream}, \texttt{FileOutputStream}, \texttt{BufferedInputStream}.                                                        
+    \end{itemize}                                                                                                                                                          
+                                                                                                                                                                           
+    \subsection*{Character Streams}                                                                                                                                        
+    Character Streams process data character by character (16-bit Unicode). They are optimized specifically for handling plain text data and automatically translate data  
+  to and from the local character set format.                                                                                                                              
+    \begin{itemize}                                                                                                                                                        
+        \item \textbf{Use Case:} Character streams should be used when reading or writing human-readable text files (e.g., \texttt{.txt}, \texttt{.csv}, or \texttt{.json} 
+  files). If we had saved the student data as a comma-separated text file instead of a serialized object, we would have used Character Streams.                            
+        \item \textbf{Examples:} \texttt{FileReader}, \texttt{FileWriter}, \texttt{BufferedReader}.                                                                        
+    \end{itemize}                                                                                                                                                          
+                                                                                                                                                                           
+    \end{document} 
