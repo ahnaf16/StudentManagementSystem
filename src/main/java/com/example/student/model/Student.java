@@ -1,22 +1,28 @@
 package com.example.student.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Student implements Serializable, Comparable<Student> {
+
+    private static final long serialVersionUID = 1L;
+
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
+    private String name;
+    private String department;
+    private Double cgpa;
+
+    @Override
+    public int compareTo(Student other) {
+        if (this.id == null || other.id == null) {
+            return 0;
+        }
+        return this.id.compareTo(other.id);
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/students")
@@ -20,42 +21,51 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping
-    public List<Student> getAllStudents() {
-        return studentService.getAllStudents();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
-        return studentService.getStudentById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
     @PostMapping
-    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
-        Student savedStudent = studentService.saveStudent(student);
+    public ResponseEntity<Student> addStudent(@RequestBody Student student) {
+        Student savedStudent = studentService.addStudent(student);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedStudent);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student studentDetails) {
-        return studentService.getStudentById(id)
-                .map(student -> {
-                    student.setFirstName(studentDetails.getFirstName());
-                    student.setLastName(studentDetails.getLastName());
-                    student.setEmail(studentDetails.getEmail());
-                    Student updatedStudent = studentService.saveStudent(student);
-                    return ResponseEntity.ok(updatedStudent);
-                })
-                .orElse(ResponseEntity.notFound().build());
+    @GetMapping
+    public ResponseEntity<List<Student>> getAllStudents() {
+        return ResponseEntity.ok(studentService.getAllStudents());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
-        if (studentService.getStudentById(id).isPresent()) {
-            studentService.deleteStudent(id);
-            return ResponseEntity.noContent().build();
+    @GetMapping("/sort/id")
+    public ResponseEntity<List<Student>> getStudentsSortedById() {
+        return ResponseEntity.ok(studentService.sortById());
+    }
+
+    @GetMapping("/sort/cgpa")
+    public ResponseEntity<List<Student>> getStudentsSortedByCgpa() {
+        return ResponseEntity.ok(studentService.sortByCgpa());
+    }
+
+    @GetMapping("/departments/unique")
+    public ResponseEntity<Set<String>> getUniqueDepartments() {
+        return ResponseEntity.ok(studentService.getUniqueDepartments());
+    }
+
+    @GetMapping("/recent")
+    public ResponseEntity<List<Student>> getRecentStudents() {
+        return ResponseEntity.ok(studentService.getRecentStudents());
+    }
+
+    @GetMapping("/recent/peek")
+    public ResponseEntity<Student> peekRecentStudent() {
+        Student student = studentService.peekRecentStudent();
+        if (student != null) {
+            return ResponseEntity.ok(student);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/recent/pop")
+    public ResponseEntity<Student> popRecentStudent() {
+        Student student = studentService.popRecentStudent();
+        if (student != null) {
+            return ResponseEntity.ok(student);
         }
         return ResponseEntity.notFound().build();
     }
